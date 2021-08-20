@@ -345,7 +345,7 @@ if uploadedFile:
             df = sex(df)
         if uc:
             df = remove_rcna(df)
-            st.text("What units are your measurements in?")
+            st.write("What units are your measurements in?")
             weight_pages = ["Grams", "Pounds", "Kilograms", "Milligrams"]
             length_pages = ["Millimeters","Inches", "Meters", "Centimeters"]
             weight = st.radio("Weight Measurements", weight_pages)
@@ -406,8 +406,11 @@ if uploadedFile:
                 prnt = colcheck(df)
                 st.write(prnt)
             if counVald:
-                prnt = countryValidity(df)
-                st.write(prnt)
+                if "country" in df.columns:
+                    prnt = countryValidity(df)
+                    st.write(prnt)
+                else:
+                    st.write("The ""country"" column was not found in your dataframe, to apply the ""Country Validity"" function this column is required.")
             if matSamp:
                 if "materialSampleType" in df.columns:
                     count = 1
