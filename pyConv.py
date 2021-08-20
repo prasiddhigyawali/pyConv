@@ -1,4 +1,3 @@
-
 from logging import StrFormatStyle
 import pandas as pd
 import re
@@ -198,12 +197,16 @@ def countryValidity(df):
     Checks to make sure all country names are valid according the GENOME.
     Valid countries can be found here: https://github.com/futres/fovt-data-mapping/blob/ade4d192a16dd329364362966eaa01d116950e1d/Mapping%20Files/geome_country_list.csv
     '''
-    print("Checking Validity of Countries")
+    #print("Checking Validity of Countries")
 
-    GENOMEcountries = pd.read_csv("https://raw.githubusercontent.com/futres/fovt-data-mapping/master/Mapping%20Files/geome_country_list.csv")
-    invalid = str(list(set(df["Countries"]) - set(GENOMEcountries["GEOME_Countries"])))
-    output = str(f"These countrys found in your data are not recognized by GEOME: {invalid}")
-    return output
+    if "country" in df.columns:
+        GENOMEcountries = pd.read_csv("https://raw.githubusercontent.com/futres/fovt-data-mapping/master/Mapping%20Files/geome_country_list.csv")
+        invalid = str(list(set(df["country"]) - set(GENOMEcountries["GEOME_Countries"])))
+        output = str(f"These countrys found in your data are not recognized by GEOME: {invalid}")
+        return output
+    else:
+        output = str("The ""country"" column was not found in your dataframe, to apply the ""Country Validity"" function this column is required.")
+        return output
 
 #===========================================================================================================================================
 
@@ -371,7 +374,6 @@ if uploadedFile:
             df = remove_rcna(df)
         if counVald:
             df = remove_rcna(df)
-            st.write(countryValidity(df))
         if eveID:
             df = remove_rcna(df)
             df = add_ms_and_evID(df)
@@ -410,7 +412,8 @@ if uploadedFile:
                     prnt = countryValidity(df)
                     st.write(prnt)
                 else:
-                    st.write("The ""country"" column was not found in your dataframe, to apply the ""Country Validity"" function this column is required.")
+                    prnt = countryValidity(df)
+                    st.write(prnt)
             if matSamp:
                 if "materialSampleType" in df.columns:
                     count = 1
