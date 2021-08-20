@@ -11,6 +11,7 @@ import os
 import base64
 from io import BytesIO
 
+
 from streamlit.type_util import data_frame_to_bytes
 
 
@@ -263,9 +264,8 @@ def get_table_download_link(df):
 
 
 st.write("""
-# Data Cleaning - [READme](open:"https://github.com/futres/fovt-data-mapping/tree/master/Scripts/pythonConversion")
+# Data Cleaning - [READme](https://github.com/futres/fovt-data-mapping/tree/master/Scripts/pythonConversion#readme)
 """)
-
 
 
 page_names = ['matSampType', 'verLocal', 'sex', 'uc', 'yc', 'colcheck', 'countryValidity', 'eventID', 'dataMelt' ]
