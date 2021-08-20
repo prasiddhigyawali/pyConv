@@ -326,9 +326,9 @@ if uploadedFile:
                                 #replace_split = replace_split.to_frame()
                                 dct["userTerm"].append(uniq_vals_new)
                                 dct["replacedWith"].append(replace_split)
-                                df_download= pd.DataFrame(dct)
-                                csv = df_download.to_csv(index=False)
-                                b64 = base64.b64encode(csv.encode()).decode()  # some strings
+                                #df_download= dct
+                                #csv = df_download.to_csv(index=False)
+                                #b64 = base64.b64encode(csv.encode()).decode()  # some strings
         if verLoc:
             df = remove_rcna(df)
             locality_cols= []
@@ -417,13 +417,16 @@ if uploadedFile:
             if matSamp:
                 if "materialSampleType" in df.columns:
                     count = 1
-                    download = st.button('Generate materialSampleType CSV')
-                    if download:
-                        linko= f'<a href="data:file/csv;base64,{b64}" download="MST_dict.csv">Download MST_dict.csv</a>'
-                        st.markdown(linko, unsafe_allow_html=True)
+                    #download = st.button('Generate materialSampleType CSV')
+                    #if download:
+                        #linko= f'<a href="data:file/csv;base64,{b64}" download="MST_dict.csv">Download MST_dict.csv</a>'
+                        #st.markdown(linko, unsafe_allow_html=True)
                 else:
                     st.write("The ""materialSampleType"" column was not found in your dataframe, to apply the ""Material Sample Type"" function this column is required.")
-
-
-
-
+            clean_df = st.button("Click here to generate the cleaned version of your dataframe in CSV format")
+            if clean_df:
+                df_download = df
+                csv = df_download.to_csv(index=False)
+                b64 = base64.b64encode(csv.encode()).decode()  # some strings
+                linko= f'<a href="data:file/csv;base64,{b64}" download="clean-df.csv">Download clean-df.csv</a>'
+                st.markdown(linko, unsafe_allow_html=True)
